@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property integer $id
@@ -11,8 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $content
  * @property bool $is_locked
- * @property string $created_at
- * @property string $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Note extends Model
 {
@@ -58,6 +59,12 @@ class Note extends Model
         'content',
         'is_locked',
     ];
+
+
+    public function getTrimmedContentAttribute()
+    {
+        return strlen($this->content) > 100 ? substr($this->content, 0, 100) . '...' : $this->content;
+    }
 
 
     public function project()

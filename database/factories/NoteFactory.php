@@ -16,8 +16,10 @@ class NoteFactory extends Factory
      */
     public function definition()
     {
+        
         return [
-            //
+            'title' => fake()->title(),
+            'content' => fake()->text(1000)
         ];
     }
 }

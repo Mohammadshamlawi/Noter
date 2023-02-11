@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/home', [HomeController::class, 'index']);
-Route::get('/notes', [HomeController::class, 'notes']);
-Route::get('/projects', [HomeController::class, 'projects']);
-Route::get('/collections', [HomeController::class, 'collections']);
+Route::get('/{item}', [HomeController::class, 'index'])->name('main');
+
+// Route::get('/notes', [HomeController::class, 'notes'])->name('notes');
+// Route::get('/projects', [HomeController::class, 'projects']);
+// Route::get('/collections', [HomeController::class, 'collections']);
 
 Route::view('/welcome', 'welcome');
+Route::view('/test', 'test');
 
 Route::fallback([HomeController::class, 'index']);
