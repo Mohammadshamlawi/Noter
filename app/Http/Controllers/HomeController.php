@@ -41,9 +41,9 @@ class HomeController extends Controller
 
     public function edit($item = 'note', $id = null)
     {
-        list($model, $item) = validateItem($item);
+        list($model, $item, $with) = validateItem($item);
 
-        $result = $model::findOrFail(strval($id));
+        $result = $model::with($with)->findOrFail(strval($id));
         return view($item . 's.edit', [$item => $result]);
     }
 
@@ -64,16 +64,4 @@ class HomeController extends Controller
         $model::findOrFail((string) $id)->delete();
         return redirect(route('index', compact('item')));
     }
-
-    // public function projects()
-    // {
-    //     $projects = Project::with('notes')->paginate();
-    //     return response()->json(compact('projects'));
-    // }
-
-    // public function collections()
-    // {
-    //     $collections = Collection::with('projects.notes')->paginate();
-    //     return response()->json(compact('collections'));
-    // }
 }

@@ -51,6 +51,12 @@ class Collection extends Model
     protected $fillable = ['title'];
 
 
+    public function getTrimmedTitleAttribute()
+    {
+        return strlen($this->title) > 100 ? substr($this->title, 0, 100) . '...' : $this->title;
+    }
+
+
     public function projects()
     {
         return $this->hasMany(Project::class, 'collection_id', 'id');

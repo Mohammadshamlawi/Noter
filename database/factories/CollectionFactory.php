@@ -17,7 +17,7 @@ class CollectionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => "Collection " . fake()->randomNumber(3)
         ];
     }
 }

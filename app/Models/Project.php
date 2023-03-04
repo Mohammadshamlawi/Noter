@@ -58,6 +58,12 @@ class Project extends Model
     ];
 
 
+    public function getTrimmedTitleAttribute()
+    {
+        return strlen($this->title) > 100 ? substr($this->title, 0, 100) . '...' : $this->title;
+    }
+
+
     public function notes()
     {
         return $this->hasMany(Note::class, 'project_id', 'id');

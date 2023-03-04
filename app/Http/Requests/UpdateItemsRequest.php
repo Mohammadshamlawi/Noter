@@ -25,7 +25,7 @@ class UpdateItemsRequest extends FormRequest
     {
         $rules = ['title' => 'required|string|max:510'];
 
-        if ($this->validateItem($this->route('item'))[1] === "note") {
+        if (validateItem($this->route('item'))[1] === "note") {
             $rules['content'] = 'required|string|max:1073741823';
         }
 
@@ -47,15 +47,5 @@ class UpdateItemsRequest extends FormRequest
             $validated['content'] = htmlspecialchars($validated['content']);
         }
         return $validated;
-    }
-
-    public function validateItem($item)
-    {
-        return match ($item) {
-            'note', 'notes', 'n' => [Note::class, 'note', []],
-            'project', 'projects', 'p' => [Project::class, 'project', ['notes']],
-            'collection', 'collections', 'c' => [Collection::class, 'collection', ['projects']],
-            default => [Note::class, 'note', []]
-        };
     }
 }

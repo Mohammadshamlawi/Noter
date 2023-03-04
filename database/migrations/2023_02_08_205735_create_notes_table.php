@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->nullable()->constrained('projects')->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignId('project_id')->nullable()->constrained('projects')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title', 510)->nullable();
             $table->longText('content')->nullable();
             $table->boolean('is_locked')->default('0');
