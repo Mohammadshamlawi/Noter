@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreItemsRequest extends FormRequest
 {
@@ -23,13 +24,17 @@ class StoreItemsRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = ['title' => 'required|string|max:510'];
+        $extra = match (validateItem($this->route('item'))[1]) {
+            "note" => [
+                'content' => 'required|string|max:1073741823',
+                'is_locked' => [Rule::requiredIf($this->is_locked !== null), 'in:on,off']
+            ],
+            "project" => [
+                'is_locked' => [Rule::requiredIf($this->is_locked !== null), 'in:on,off']
+            ]
+        };
 
-        if (validateItem($this->route('item'))[1] === "note") {
-            $rules['content'] = 'required|string|max:1073741823';
-        }
-
-        return $rules;
+        return array_merge(['title' => 'required|string|max:510'], $extra);
     }
 
     /**
@@ -45,6 +50,10 @@ class StoreItemsRequest extends FormRequest
 
         if (array_key_exists('content', $validated)) {
             $validated['content'] = htmlspecialchars($validated['content']);
+        }
+
+        if (array_key_exists('is_locked', $validated)) {
+            $validated['is_locked'] = $this->is_locked === 'on' || $this->is_locked === 'off';
         }
         return $validated;
     }

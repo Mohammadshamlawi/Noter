@@ -43,7 +43,7 @@ class HomeController extends Controller
     {
         list($model, $item, $with) = validateItem($item);
 
-        $result = $model::with($with)->findOrFail(strval($id));
+        $result = $model::with($with)->where('is_locked', "0")->findOrFail(strval($id));
         return view($item . 's.edit', [$item => $result]);
     }
 
@@ -51,7 +51,7 @@ class HomeController extends Controller
     {
         list($model, $item) = validateItem($item);
 
-        $model = $model::findOrFail(strval($id));
+        $model = $model::where('is_locked', "0")->findOrFail(strval($id));
         $model->update($request->validated());
 
         return redirect(route('show', compact('item', 'id')));

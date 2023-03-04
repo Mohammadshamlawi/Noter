@@ -148,9 +148,7 @@
 
         <div class="center" style="height: calc(100% - 80px);">
             <textarea class="white-box" name="content" required maxlength="1073741823" aria-multiline="true" name="content"
-                style="padding: 10px; text-align: left; word-wrap: break-word; white-space: pre-wrap; height: calc(100% - 30px); margin-bottom: 20px;">
-				{{ htmlspecialchars_decode($note->content) }}
-			</textarea>
+                style="padding: 10px; text-align: left; word-wrap: break-word; white-space: pre-wrap; height: calc(100% - 30px); margin-bottom: 20px;">{{ htmlspecialchars_decode($note->content) }}</textarea>
         </div>
 
     </form>

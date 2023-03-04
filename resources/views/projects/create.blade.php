@@ -141,6 +141,10 @@
                     <input class="black-22" alt="Project Title" title="Project Title" placeholder="Title" name="title"
                         style="width: 90%; border-radius: 15px; padding: 5px; text-align: center;" required
                         maxlength="510">
+
+                    <input type="checkbox"
+                        style="margin-left: 10px; float: right; height: 30px; transform: scale(1.5); cursor: pointer;"
+                        name="is_locked" title="Unlocked" onclick="this.title = this.checked ? 'Locked' : 'Unlocked'">
                 </div>
             </div>
         </div>

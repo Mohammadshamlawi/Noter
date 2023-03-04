@@ -16,6 +16,8 @@
 
                 <span
                     style=" margin-left: 15px; float: left; font-size: 10px; color: gray;">{{ $project->created_at->toDateString() }}</span>
+
+                <span style="margin-left: 10px;">{{ $project->is_locked ? '🔒' : '🔓' }}</span>
             </div>
         </button>
     </li>
