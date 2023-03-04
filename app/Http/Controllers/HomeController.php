@@ -2,31 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Collection;
-use App\Models\Note;
-use App\Models\Project;
+use App\Http\Requests\StoreItemsRequest;
+use App\Http\Requests\UpdateItemsRequest;
 
 class HomeController extends Controller
 {
 
     public function index($item = 'note')
     {
-        [$model, $item] = match ($item) {
-            'note', 'notes', 'n' => [Note::class, 'note'],
-            'project', 'projects', 'p' => [Project::class, 'project'],
-            'collection', 'collections', 'c' => [Collection::class, 'collection'],
-            default => [Note::class, 'note']
-        };
+        list($model, $item) = validateItem($item);
 
-        $items = $model::query()->orderByDesc('created_at')->paginate();
+        $items = $model::orderByDesc('created_at')->paginate();
         return view('index', compact('items', 'item'));
     }
 
-    // public function notes()
-    // {
-    //     $notes = Note::query()->paginate();
-    //     return view('notes.index', compact('notes'));
-    // }
+    public function create($item = 'note')
+    {
+        list($model, $item) = validateItem($item);
+
+        return view($item . 's.create');
+    }
+
+    public function store(StoreItemsRequest $request, $item = 'note')
+    {
+        list($model, $item) = validateItem($item);
+
+        $result = $model::create($request->validated());
+        return redirect(route('show', ['item' => $item, 'id' => $result->getKey()]));
+    }
+
+    public function show($item = 'note', $id = null)
+    {
+        list($model, $item, $with) = validateItem($item);
+
+        $result = $model::with($with)->findOrFail(strval($id));
+        return view($item . 's.show', [$item => $result]);
+    }
+
+    public function edit($item = 'note', $id = null)
+    {
+        list($model, $item) = validateItem($item);
+
+        $result = $model::findOrFail(strval($id));
+        return view($item . 's.edit', [$item => $result]);
+    }
+
+    public function update(UpdateItemsRequest $request, $item = 'note', $id = null)
+    {
+        list($model, $item) = validateItem($item);
+
+        $model = $model::findOrFail(strval($id));
+        $model->update($request->validated());
+
+        return redirect(route('show', compact('item', 'id')));
+    }
+
+    public function destroy($item = 'note', $id = null)
+    {
+        list($model, $item) = validateItem($item);
+
+        $model::findOrFail((string) $id)->delete();
+        return redirect(route('index', compact('item')));
+    }
 
     // public function projects()
     // {

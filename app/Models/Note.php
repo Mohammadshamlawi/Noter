@@ -39,13 +39,7 @@ class Note extends Model
      * @var array<string>
      */
     protected $visible = [
-        'id',
-        'project_id',
-        'title',
-        'content',
-        'is_locked',
-        'created_at',
-        'updated_at',
+        '*'
     ];
 
     /**
@@ -61,9 +55,14 @@ class Note extends Model
     ];
 
 
+    public function getTrimmedTitleAttribute()
+    {
+        return strlen($this->title) > 100 ? substr($this->title, 0, 100) . '...' : $this->title;
+    }
+
     public function getTrimmedContentAttribute()
     {
-        return strlen($this->content) > 100 ? substr($this->content, 0, 100) . '...' : $this->content;
+        return strlen($this->content) > 250 ? substr($this->content, 0, 250) . '...' : $this->content;
     }
 
 

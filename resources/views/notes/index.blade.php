@@ -3,8 +3,8 @@
         <div
             style="margin-top: 15px; padding: 10px; border-radius: 10px; width: calc(100% - 30px); height: fit-content; box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28); background-color: white;">
             <div style="display: flex; align-items: center;">
-                <span style="float:left;">{{ $note->title }}</span> <span
-                    style="float: left; font-size: 10px; color: gray; margin-left: 10px;">#{{ $note->id }}</span>
+                <a style="text-decoration: underline;" href="{{ route('show', ['item' => 'note', 'id' => $note->id]) }}"><b><span style="float:left; color:goldenrod; font-size: 18px;">{{ $note->title }}</span></b></a>
+                <a style="text-decoration: underline;" href="{{ route('show', ['item' => 'note', 'id' => $note->id]) }}"><span style="float: left; font-size: 10px; color: gray; margin-left: 10px;">#{{ $note->id }}</span></a>
             </div>
             <span style="float: left; font-size: 10px; color: gray;">{{ $note->created_at->toDateString() }}</span>
             <br>

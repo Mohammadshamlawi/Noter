@@ -24,19 +24,6 @@
             font-family: 'Nunito', sans-serif;
         }
 
-        /* a {
-            background-color: transparent;
-            color: inherit;
-            text-decoration: inherit;
-        } */
-
-        *,
-        :after,
-        :before {
-            box-sizing: border-box;
-            border: 0 solid #e2e8f0
-        }
-
         .bg-gray-100 {
             --tw-bg-opacity: 1;
             background-color: rgb(243 244 246 / var(--tw-bg-opacity))
@@ -98,43 +85,72 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .white-box {
+            border-radius: 10px;
+            width: 70%;
+            height: fit-content;
+            box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+            background-color: white;
+        }
+
         .center {
             display: flex;
             justify-content: center;
+        }
+
+        .black-22 {
+            color: black;
+            font-size: 22px;
+        }
+
+        .save-btn {
+            border: none;
+            background: transparent;
+        }
+
+        .save-btn:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body class="antialiased bg-gray-100 dark:bg-gray-900 min-h-screen">
 
-    <div style="display: flex; justify-items: center;" class="justify-center">
-        <input placeholder="Search" id="search_bar"
-            style="background: white; padding: 15px; border-radius: 50px; box-shadow: 0 4px 6px 0 rgba(32, 33, 36, .28); width: 50%; margin-top: 30px; font-size: 22px; color: rgb(66, 66, 66);">
+    <form method="POST" action="{{ route('store', ['item' => 'note']) }}"
+        style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;">
+        @csrf
 
-        <a href="{{ route('create', ['item' => $item]) }}" title="Create {{ ucwords($item) }}"
-            style="text-align: center; text-decoration: none; font-size: 40px; align-items: center; margin-top: 30px; margin-left: 20px;">+</a>
-    </div>
+        <div class="center">
+            <div style="margin-top: 10px; margin-bottom: 10px; padding: 10px; width: 80%;" class="white-box">
 
-    <div style="display: flex; justify-items: center; width: 100%; margin: 0; padding: 0;" class="justify-center">
-        <ul id="tabs" class="categories" style="width: 70%; margin-top: 10px;">
-            <li id="note" @class(['selected' => $item === 'note'])><a href="{{ route('index', ['item' => 'note']) }}">Notes</a>
-            </li>
-            <li id="project" @class(['selected' => $item === 'project'])><a
-                    href="{{ route('index', ['item' => 'project']) }}">Projects</a></li>
-            <li id="collection" @class(['selected' => $item === 'collection'])><a
-                    href="{{ route('index', ['item' => 'collection']) }}">Collections</a></li>
-        </ul>
-    </div>
+                <a href="{{ route('index', ['item' => 'note']) }}" style="float: left;" class="black-22"
+                    title="Home Page"><span>&#8592;</span></a>
 
-    <div style="display: block; width: 100%; height: 100%; margin-bottom: 50px;">
-        <center>
-            <ul id="content"
-                style="list-style-type: none; width: 70%; border: none; text-align: center; margin: 0; padding: 0; height: 100%;">
-                @each($item . 's.index', $items, $item, 'empty')
-            </ul>
-        </center>
-    </div>
+                <button type="submit" style="float: right;" class="black-22 save-btn"><span
+                        title="Save">&check;</span></button>
 
+                <div class="center" style="margin-left: 30px; margin-right: 30px;">
+                    <input class="black-22" alt="Note Title" title="Note Title" placeholder="Title" name="title"
+                        style="width: 90%; border-radius: 15px; padding: 5px; text-align: center;" required
+                        maxlength="510">
+                </div>
+            </div>
+        </div>
+
+        <div class="center" style="height: calc(100% - 80px);">
+            <textarea class="white-box" name="content" required maxlength="1073741823" name="content" placeholder="Content"
+                style="padding: 10px; text-align: left; word-wrap: break-word; white-space: pre-wrap; height: calc(100% - 30px); margin-bottom: 20px;"></textarea>
+        </div>
+
+    </form>
 </body>
 
 </html>
