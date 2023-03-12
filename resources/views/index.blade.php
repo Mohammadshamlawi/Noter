@@ -16,19 +16,12 @@
             line-height: 1.15;
             -webkit-text-size-adjust: 100%;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-            line-height: 1.5;
         }
 
         body {
             margin: 0;
             font-family: 'Nunito', sans-serif;
         }
-
-        /* a {
-            background-color: transparent;
-            color: inherit;
-            text-decoration: inherit;
-        } */
 
         *,
         :after,
@@ -55,7 +48,7 @@
             -moz-osx-font-smoothing: grayscale
         }
 
-        @media (prefers-color-scheme:dark) {
+        @media (prefers-color-scheme: dark) {
             .dark\:bg-gray-900 {
                 --tw-bg-opacity: 1;
                 background-color: rgb(17 24 39 / var(--tw-bg-opacity))
@@ -63,7 +56,7 @@
         }
 
         .selected {
-            border-bottom: 0.5px ridge blue;
+            border-bottom: 1px ridge blue;
         }
 
         .categories {
@@ -74,25 +67,24 @@
             padding: 0;
         }
 
-        .categories>li {
+        .categories > li {
             display: inline-block;
             list-style-type: none;
             width: 25%;
         }
 
-        .categories>li>a {
+        .categories > li > a {
             display: block;
             text-align: center;
-            padding: 9px 10px;
-            padding-bottom: 3px;
+            padding: 9px 10px 3px;
             text-decoration: none;
         }
 
-        .categories>li>a:hover {
+        .categories > li > a:hover {
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
-        .categories>li>a:hover::before {
+        .categories > li > a:hover::before {
             width: 200%;
             height: 200%;
             transform: translate(-50%, -50%) scale(1);
@@ -127,12 +119,16 @@
     </div>
 
     <div style="display: block; width: 100%; height: 100%; margin-bottom: 50px;">
-        <center>
+        <div class="center">
             <ul id="content"
                 style="list-style-type: none; width: 70%; border: none; text-align: center; margin: 0; padding: 0; height: 100%;">
                 @each($item . 's.index', $items, $item, 'empty')
             </ul>
-        </center>
+        </div>
+
+        <div class="center">
+            {{ $items->links() }}
+        </div>
     </div>
 
 </body>

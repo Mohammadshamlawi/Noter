@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 /**
  * @property string $id
@@ -51,18 +54,18 @@ class Collection extends Model
     protected $fillable = ['title'];
 
 
-    public function getTrimmedTitleAttribute()
+    public function getTrimmedTitleAttribute(): string
     {
         return strlen($this->title) > 100 ? substr($this->title, 0, 100) . '...' : $this->title;
     }
 
 
-    public function projects()
+    public function projects(): HasMany
     {
         return $this->hasMany(Project::class, 'collection_id', 'id');
     }
 
-    public function notes()
+    public function notes(): HasOneThrough|HasManyThrough
     {
         return $this->through('projects')->has('notes');
     }

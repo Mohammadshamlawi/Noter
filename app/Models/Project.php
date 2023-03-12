@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -55,21 +57,22 @@ class Project extends Model
     protected $fillable = [
         'title',
         'is_locked',
+        'collection_id',
     ];
 
 
-    public function getTrimmedTitleAttribute()
+    public function getTrimmedTitleAttribute(): string
     {
         return strlen($this->title) > 100 ? substr($this->title, 0, 100) . '...' : $this->title;
     }
 
 
-    public function notes()
+    public function notes(): HasMany
     {
         return $this->hasMany(Note::class, 'project_id', 'id');
     }
 
-    public function collection()
+    public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class, 'collection_id', 'id');
     }

@@ -16,7 +16,6 @@
             line-height: 1.15;
             -webkit-text-size-adjust: 100%;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-            line-height: 1.5;
         }
 
         body {
@@ -29,10 +28,6 @@
             background-color: rgb(243 244 246 / var(--tw-bg-opacity))
         }
 
-        .justify-center {
-            justify-content: center
-        }
-
         .min-h-screen {
             min-height: 100vh
         }
@@ -42,44 +37,31 @@
             -moz-osx-font-smoothing: grayscale
         }
 
-        @media (prefers-color-scheme:dark) {
+        @media (prefers-color-scheme: dark) {
             .dark\:bg-gray-900 {
                 --tw-bg-opacity: 1;
                 background-color: rgb(17 24 39 / var(--tw-bg-opacity))
             }
         }
 
-        .selected {
-            border-bottom: 0.5px ridge blue;
-        }
-
-        .categories {
-            list-style-type: none;
-            border-bottom: 1px ridge #454546;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        .categories>li {
+        .categories > li {
             display: inline-block;
             list-style-type: none;
             width: 25%;
         }
 
-        .categories>li>a {
+        .categories > li > a {
             display: block;
             text-align: center;
-            padding: 9px 10px;
-            padding-bottom: 3px;
+            padding: 9px 10px 3px;
             text-decoration: none;
         }
 
-        .categories>li>a:hover {
+        .categories > li > a:hover {
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
-        .categories>li>a:hover::before {
+        .categories > li > a:hover::before {
             width: 200%;
             height: 200%;
             transform: translate(-50%, -50%) scale(1);
@@ -124,35 +106,47 @@
 
 <body class="antialiased bg-gray-100 dark:bg-gray-900 min-h-screen">
 
-    <form method="POST" action="{{ route('update', ['item' => 'project', 'id' => $project->id]) }}"
-        style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;">
-        @method('PUT')
-        @csrf
+<form method="POST" action="{{ route('update', ['item' => 'project', 'id' => $project->id]) }}"
+      style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;">
+    @method('PUT')
+    @csrf
 
-        <div class="center">
-            <div style="margin-top: 10px; margin-bottom: 10px; padding: 10px; width: 80%;" class="white-box">
+    <div class="center">
+        <div style="margin-top: 10px; margin-bottom: 10px; padding: 10px; width: 80%;" class="white-box">
 
-                <a href="{{ route('show', ['item' => 'project', 'id' => $project->id]) }}" style="float: left;"
-                    class="black-22" title="{{ $project->trimmed_title }}"><span>&#8592;</span></a>
+            <a href="{{ route('show', ['item' => 'project', 'id' => $project->id]) }}" style="float: left;"
+               class="black-22" title="{{ $project->trimmed_title }}"><span>&#8592;</span></a>
 
-                <button type="submit" style="float: right;" class="black-22 save-btn"><span
-                        title="Save">&check;</span></button>
+            <button type="submit" style="float: right;" class="black-22 save-btn"><span
+                    title="Save">&check;</span></button>
 
-                <div class="center" style="margin-left: 30px; margin-right: 30px;">
-                    <input class="black-22" alt="Project Title" title="Project Title" value="{{ $project->title }}"
-                        name="title" style="width: 90%; border-radius: 15px; padding: 5px; text-align: center;"
-                        required maxlength="510" aria-multiline="true">
-                </div>
+            <div class="center" style="margin-left: 30px; margin-right: 30px;">
+                <input class="black-22" alt="Project Title" title="Project Title" value="{{ $project->title }}"
+                       name="title" style="width: 90%; border-radius: 15px; padding: 5px; text-align: center;"
+                       required maxlength="510" aria-multiline="true">
             </div>
         </div>
+    </div>
 
-        <div style="margin-bottom: 20px; height: fit-content;" class="center">
-            <ul id="content"
-                style="list-style-type: none; width: 70%; border: none; text-align: center; margin: 0; padding: 0; height: 100%;">
-                @each('notes.index', $project->notes, 'note', 'empty')
-            </ul>
+    @if(!empty($titles))
+        <div class="center" style="margin-bottom: 10px;">
+            <label>
+                <select class="black-22" name="parent">
+                    @foreach($titles as $id => $title)
+                        <option value="{{ $id }}">{{ $title }}</option>
+                    @endforeach
+                </select>
+            </label>
         </div>
-    </form>
+    @endif
+
+    <div style="margin-bottom: 20px; height: fit-content;" class="center">
+        <ul id="content"
+            style="list-style-type: none; width: 70%; border: none; text-align: center; margin: 0; padding: 0; height: 100%;">
+            @each('notes.index', $project->notes, 'note', 'empty')
+        </ul>
+    </div>
+</form>
 
 </body>
 

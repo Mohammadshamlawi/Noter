@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -55,18 +56,18 @@ class Note extends Model
     ];
 
 
-    public function getTrimmedTitleAttribute()
+    public function getTrimmedTitleAttribute(): string
     {
         return strlen($this->title) > 100 ? substr($this->title, 0, 100) . '...' : $this->title;
     }
 
-    public function getTrimmedContentAttribute()
+    public function getTrimmedContentAttribute(): string
     {
         return strlen($this->content) > 250 ? substr($this->content, 0, 250) . '...' : $this->content;
     }
 
 
-    public function project()
+    public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class, 'project_id', 'id');
     }
