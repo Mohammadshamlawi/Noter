@@ -24,14 +24,6 @@ class HomeController extends Controller
         return view('index', compact('items', 'item'));
     }
 
-    public function create($item = 'note'): Factory|View|Application
-    {
-        list(, $item, , $parentModel) = validateItem($item);
-
-        $titles = $parentModel !== null ? $parentModel::pluck('title', 'id') : [];
-        return view($item . 's.create', compact('titles'));
-    }
-
     /**
      * @throws ValidationException
      */
@@ -41,6 +33,14 @@ class HomeController extends Controller
 
         $result = $model::create($request->validated());
         return redirect(route('show', ['item' => $item, 'id' => $result->getKey()]));
+    }
+
+    public function create($item = 'note'): Factory|View|Application
+    {
+        list(, $item, , $parentModel) = validateItem($item);
+
+        $titles = $parentModel !== null ? $parentModel::pluck('title', 'id') : [];
+        return view($item . 's.create', compact('titles'));
     }
 
     public function show($item = 'note', $id = null): Factory|View|Application
@@ -56,7 +56,7 @@ class HomeController extends Controller
         list($model, $item, $with, $parentModel) = validateItem($item);
 
         $titles = $parentModel !== null ? $parentModel::pluck('title', 'id') : [];
-        $result = $this->is_lockedQuery($model)->with($with)->findOrFail((string)$id);
+        $result = $model::with($with)->findOrFail((string)$id);
         return view($item . 's.edit', [$item => $result, 'titles' => $titles]);
     }
 
@@ -80,7 +80,6 @@ class HomeController extends Controller
         $model::findOrFail((string)$id)->delete();
         return redirect(route('index', compact('item')));
     }
-
 
     private function is_lockedQuery(string $model): Builder
     {

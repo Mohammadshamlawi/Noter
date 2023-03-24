@@ -108,7 +108,7 @@
 
 <form method="POST" action="{{ route('update', ['item' => 'note', 'id' => $note->id]) }}"
       style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;">
-    @method('PUT')
+    @method('PATCH')
     @csrf
 
     <div class="center">

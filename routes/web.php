@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/home', [HomeController::class, 'index']);
 Route::get('/{item}', [HomeController::class, 'index'])->name('index');
-Route::get('/create/{item}', [HomeController::class, 'create'])->name('create');
+Route::get('/{item}/create', [HomeController::class, 'create'])->name('create');
 Route::post('/{item}', [HomeController::class, 'store'])->name('store');
 Route::get('/{item}/{id}', [HomeController::class, 'show'])->name('show');
-Route::get('/edit/{item}/{id}', [HomeController::class, 'edit'])->name('edit');
-Route::put('/{item}/{id}', [HomeController::class, 'update'])->name('update');
-Route::delete('/delete/{item}/{id}', [HomeController::class, 'destroy'])->name('destroy');
+Route::get('/{item}/{id}/edit', [HomeController::class, 'edit'])->name('edit');
+Route::patch('/{item}/{id}', [HomeController::class, 'update'])->name('update');
+Route::delete('/{item}/{id}', [HomeController::class, 'destroy'])->name('destroy');
 
 Route::view('/welcome', 'welcome');
 Route::view('/test', 'test');
