@@ -1,12 +1,21 @@
 {
-    "name": "laravel/laravel",
+    "name": "laravel9-plain/noter",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "A NotePad with some nesting features. A Laravel 9 test to get comfortable and test some features.",
     "keywords": [
-        "framework",
-        "laravel"
+        "php",
+        "laravel",
+        "project",
+        "notepad",
+        "base-laravel9"
     ],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohammad Shamlawi",
+            "email": "mohammad@shamlawi.com"
+        }
+    ],
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
